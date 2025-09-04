@@ -34,6 +34,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET Lead by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const lead = await Lead.findById(req.params.id).populate('salesAgent', 'name email');
+    if (!lead) return res.status(404).json({ error: `Lead with ID '${req.params.id}' not found.` });
+    res.json(lead);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // PATCH (Update) Lead
 router.patch('/:id', async (req, res) => {
   try {
