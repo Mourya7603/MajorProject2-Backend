@@ -26,6 +26,7 @@ router.get('/', async (req, res) => {
     if (req.query.status) filters.status = req.query.status;
     if (req.query.source) filters.source = req.query.source;
     if (req.query.tags) filters.tags = { $in: req.query.tags.split(',') };
+    if (req.query.priority) filters.priority = req.query.priority;
 
     const leads = await Lead.find(filters).populate('salesAgent', 'name email');
     res.json(leads);
