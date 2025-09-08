@@ -27,4 +27,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+// DELETE agent
+router.delete('/:id', async (req, res) => {
+  try {
+    const agent = await SalesAgent.findByIdAndDelete(req.params.id);
+    if (!agent) return res.status(404).json({ error: `agent with ID '${req.params.id}' not found.` });
+
+    res.json({ message: 'agent deleted successfully.' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 module.exports = router;
